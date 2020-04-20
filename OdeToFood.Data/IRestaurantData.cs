@@ -7,6 +7,7 @@ namespace OdeToFood.Data
     public interface IRestaurantData
     {
         public IEnumerable<Restaurant> GetAll();
+        public IEnumerable<Restaurant> GetRestaurantsByName(string name);
     }
 
     public class InMemoryRestauranData : IRestaurantData
@@ -26,6 +27,19 @@ namespace OdeToFood.Data
         public IEnumerable<Restaurant> GetAll()
         {
             return restaurants
+                .OrderBy(restaurant => restaurant.Name);
+        }
+
+        public IEnumerable<Restaurant> GetRestaurantsByName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return restaurants
+                    .OrderBy(restaurant => restaurant.Name);
+            }
+
+            return restaurants
+                .Where(restaurant => restaurant.Name.ToUpper().Contains(name.ToUpper()))
                 .OrderBy(restaurant => restaurant.Name);
         }
     }
