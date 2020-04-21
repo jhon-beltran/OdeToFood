@@ -8,6 +8,7 @@ namespace OdeToFood.Data
     {
         public IEnumerable<Restaurant> GetAll();
         public IEnumerable<Restaurant> GetRestaurantsByName(string name);
+        public Restaurant GetRestaurantById(int id);
     }
 
     public class InMemoryRestauranData : IRestaurantData
@@ -41,6 +42,11 @@ namespace OdeToFood.Data
             return restaurants
                 .Where(restaurant => restaurant.Name.ToUpper().Contains(name.ToUpper()))
                 .OrderBy(restaurant => restaurant.Name);
+        }
+
+        public Restaurant GetRestaurantById(int id)
+        {
+            return restaurants.SingleOrDefault(restaurant => restaurant.Id == id);
         }
     }
 
